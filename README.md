@@ -14,7 +14,7 @@ Building a data lakehouse solution for sensor data that trains a machine learnin
     1. [TO DO: Filter Reading Prior to Research Consent Date](#to-do-filter-reading-prior-to-research-consent-date)
     2. [TO DO: Anonymize Data](#to-do-anonymize-data)
 7. [Insfrastructure Setup](#infrastructure-setup)
-    1. [Option 1 - Using Infrastructure as Code](#option-1---using-infrastructure-as-code)
+    1. [Option 1 - Using Imperative Provisioning Script](#option-1---using-imperative-provisioning-script)
         1. [Deploy Infrastructure](#deploy-infrastructure/)
         2. [Load S3 Bucket and Create Glue Landing Tables](#load-s3-buckets-and-create-glue-landing-tables)
     2. [Option 2 - Manual via AWS Console](#option-2---manual-via-aws-console)
@@ -202,7 +202,7 @@ For stage of developing the lakehouse, the following row counts should be in eac
 
 ## Infrastructure Setup
 
-### Option 1 - Using Infrastructure as Code
+### Option 1 - Using Imperative Provisioning Script
 
 **NOTE:** The instructions in the [Option 2 - Manual via AWS Console](#option-2---manual-via-aws-console) section contains all manual steps to setup the infrastructure for this project. 
 
