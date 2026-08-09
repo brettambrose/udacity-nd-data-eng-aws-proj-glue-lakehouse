@@ -5,11 +5,11 @@ import os
 main_config = configparser.ConfigParser()
 main_config.read("lakehouse.cfg")
 
-aws_creds_path = os.path.expanduser("~\\.aws\\credentials")
+aws_creds_path = os.path.expanduser(os.path.join("~", ".aws", "credentials"))
 aws_creds = configparser.ConfigParser()
 aws_creds.read(aws_creds_path)
 
-aws_config_path = os.path.expanduser("~\\.aws\\config")
+aws_config_path = os.path.expanduser(os.path.join("~", ".aws", "config"))
 aws_config = configparser.ConfigParser()
 aws_config.read(aws_config_path)
 
