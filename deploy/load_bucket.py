@@ -1,19 +1,11 @@
 import boto3
 import json
-import configparser
 import os
+from util.config_loader import  load_main_config, load_aws_credentials, load_aws_config
 
-main_config_path = "lakehouse.cfg"
-main_config = configparser.ConfigParser()
-main_config.read(main_config_path)
-
-aws_creds_path = os.path.expanduser(os.path.join("~", ".aws", "credentials"))
-aws_creds = configparser.ConfigParser()
-aws_creds.read(aws_creds_path)
-
-aws_config_path = os.path.expanduser(os.path.join("~", ".aws", "config"))
-aws_config = configparser.ConfigParser()
-aws_config.read(aws_config_path)
+main_config, main_config_path = load_main_config()
+aws_creds, aws_creds_path = load_aws_credentials()
+aws_config, aws_config_path = load_aws_config()
 
 # S3
 S3_BUCKET_NAME        = main_config.get("S3","S3_BUCKET_NAME")

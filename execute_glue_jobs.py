@@ -1,6 +1,7 @@
-import configparser
 import boto3
-import os
+from util.config_loader import load_aws_credentials, load_aws_config
+
+
 
 def run_glue_job(job,glue_client):
     """
@@ -40,15 +41,9 @@ def run_glue_job_workflow(job_list,glue_client):
 
 
 def main():
+    aws_creds, aws_creds_path = load_aws_credentials()
+    aws_config, aws_config_path = load_aws_config()
 
-    aws_creds_path = os.path.expanduser(os.path.join("~", ".aws", "credentials"))
-    aws_creds = configparser.ConfigParser()
-    aws_creds.read(aws_creds_path)
-
-    aws_config_path = os.path.expanduser(os.path.join("~", ".aws", "config"))
-    aws_config = configparser.ConfigParser()
-    aws_config.read(aws_config_path)
-    
     job_list = ["customer_landing_to_trusted", 
                 "accelerometer_landing_to_trusted", 
                 "customer_trusted_to_curated", 
