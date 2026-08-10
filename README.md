@@ -13,9 +13,10 @@ Building a data lakehouse solution for sensor data that trains a machine learnin
 6. [Project Requirements](#project-requirements)
     1. [TO DO: Filter Reading Prior to Research Consent Date](#to-do-filter-reading-prior-to-research-consent-date)
     2. [TO DO: Anonymize Data](#to-do-anonymize-data)
-7. [Insfrastructure Setup](#infrastructure-setup)
+7. [Local AWS config and credenitals for devs](#local-aws-config-and-credenitals-for-devs)
+8. [Insfrastructure Setup](#infrastructure-setup)
     1. [Option 1 - Using Imperative Provisioning Script](#option-1---using-imperative-provisioning-script)
-        1. [Deploy Infrastructure](#deploy-infrastructure/)
+        1. [Deploy Infrastructure](#deploy-infrastructure)
         2. [Load S3 Bucket and Create Glue Landing Tables](#load-s3-buckets-and-create-glue-landing-tables)
     2. [Option 2 - Manual via AWS Console](#option-2---manual-via-aws-console)
         1. [Create S3 Bucket](#create-s3-bucket)
@@ -27,9 +28,9 @@ Building a data lakehouse solution for sensor data that trains a machine learnin
         7. [Create Glue Service Role](#create-glue-service-role)
         8. [Grant Glue Privileges on S3 Bucket](#grant-glue-privileges-on-s3-bucket)
         9. [Attach Glue Policy](#attach-glue-policy)
-8. [Job Execution Steps](#job-execution-steps)
-9. [Validation](#validation)
-10. [Infrastructure Decommission](#infrastructure-decommission)
+9. [Job Execution Steps](#job-execution-steps)
+10. [Validation](#validation)
+11. [Infrastructure Decommission](#infrastructure-decommission)
 
 ## AWS PREREQUSITES
 1. An AWS Account with an IAM User with the following permissions
@@ -199,6 +200,33 @@ For stage of developing the lakehouse, the following row counts should be in eac
     * Machine Learning: 43681
 
 **HINT:** Use Transform - SQL Query nodes whenever possible.  Other node types my give unexpected results.  For example, rather than a Join node, use a SQL node that has two parents, then join them through a SQL query.
+
+## Local AWS config and credenitals for devs
+This repo assumes that there is a .aws file in the current user's home directory and there are two files within it: credentials and config.
+
+Example:
+
+C:\Users\USERNAME\.aws
+
+C:\Users\USERNAME\.aws\config 
+... will need to be populated with your access key and secrets, and should look like:
+
+<pre>
+[default]
+aws_access_key_id = YOURAWSKEY
+aws_secret_access_key = YOURAWSSECRET
+</pre>
+
+C:\Users\USERNAME\.aws\config 
+... will need to be configured with your specific AWS region, and a glue profile, and should look like:
+
+<pre>
+[default]
+region = us-east-1
+
+[profile Glue]
+role_arn = 
+</pre>
 
 ## Infrastructure Setup
 

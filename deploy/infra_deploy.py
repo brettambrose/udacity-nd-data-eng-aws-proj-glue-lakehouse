@@ -191,7 +191,7 @@ except Exception as e:
 print("**********************************************")
 print("Updating local .aws/config file with Role ARN")
 
-aws_profile = "profile Redshift"
+aws_profile = "profile Glue"
 aws_config_key = "role_arn"
 role_arn = iam_client.get_role(RoleName=IAM_ROLE_NAME)['Role']['Arn']
 
