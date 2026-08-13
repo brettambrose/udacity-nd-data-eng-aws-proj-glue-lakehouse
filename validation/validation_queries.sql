@@ -18,7 +18,7 @@ SELECT '2- trusted', 'step_trainer_trusted', COUNT(1), 14460 FROM step_trainer_t
 UNION ALL
 SELECT '3- curated', 'customer_curated' AS table_name, COUNT(1), 482 FROM customer_curated
 UNION ALL
-SELECT '3- curated', 'machine_learning_curated', COUNT(1), 8956 FROM machine_learning_curated
+SELECT '3- curated', 'machine_learning_curated', COUNT(1), 32025 FROM machine_learning_curated
 )
 SELECT 
  *,
