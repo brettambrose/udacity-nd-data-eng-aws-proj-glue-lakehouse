@@ -11,10 +11,11 @@ Building a data lakehouse solution for sensor data that trains a machine learnin
     3. [Workflow Environment](#workflow-environment-configuration)
 5. [Project Datasets](#project-datasets)
 6. [Project Requirements](#project-requirements)
-    1. [TO DO: Filter Reading Prior to Research Consent Date](#to-do-filter-reading-prior-to-research-consent-date)
-    2. [TO DO: Anonymize Data](#to-do-anonymize-data)
-7. [Local AWS config and credenitals for devs](#local-aws-config-and-credenitals-for-devs)
-8. [Insfrastructure Setup](#infrastructure-setup)
+7. [Extra Credit](#extra-credit)
+    1. [Filtering Reading Prior to Research Consent Date](#filtering-reading-prior-to-research-consent-date)
+    2. [Anonymize Data](#anonymizing-data)
+8. [Local AWS config and credenitals for devs](#local-aws-config-and-credenitals-for-devs)
+9. [Insfrastructure Setup](#infrastructure-setup)
     1. [Option 1 - Using Imperative Provisioning Script](#option-1---using-imperative-provisioning-script)
         1. [Deploy Infrastructure](#deploy-infrastructure)
         2. [Load S3 Bucket and Create Glue Landing Tables](#load-s3-buckets-and-create-glue-landing-tables)
@@ -28,9 +29,9 @@ Building a data lakehouse solution for sensor data that trains a machine learnin
         7. [Create Glue Service Role](#create-glue-service-role)
         8. [Grant Glue Privileges on S3 Bucket](#grant-glue-privileges-on-s3-bucket)
         9. [Attach Glue Policy](#attach-glue-policy)
-9. [Job Execution Steps](#job-execution-steps)
+10. [Job Execution Steps](#job-execution-steps)
 10. [Validation](#validation)
-11. [Infrastructure Decommission](#infrastructure-decommission)
+12. [Infrastructure Decommission](#infrastructure-decommission)
 
 ## AWS PREREQUSITES
 1. An AWS Account with an IAM User with the following permissions
@@ -177,10 +178,12 @@ See the ERD below to understand the desired state.
 
 ![Lakehouse ERD](/images/2025-04-26%2012_34_00-STEDI%20Human%20Balance%20Analytics%20-%20Project%20Instructions.png)
 
-### TO DO: Filter Reading Prior to Research Consent Date
+## Extra Credit
+
+### Filtering Reading Prior to Research Consent Date
 When creating the Glue Job to join data from the accelerometer readings and the customer table, filter out any readings that were prior to the research consent date. This will ensure consent was in place at the time that data was gathered. This helps in the case that in the future the customer revokes consent. We can be sure that the data we used for research was used when consent was in place for that particular data.
 
-### TO DO: Anonymize Data
+### Anonymizing Data
 Anonymize the final curated table so that it is not subject to GDPR or other privacy regulations, in case a customer requests deletion of PII, we will not be in violation by retaining PII data --remove email, and any other personally identifying information up front.
 
 ## Testing and Validation Steps
@@ -197,7 +200,9 @@ For stage of developing the lakehouse, the following row counts should be in eac
     * Step Trainer: 14460
 * Curated
     * Customer: 482
-    * Machine Learning: 40981
+    * Machine Learning: 40981*
+        * **NOTE 1** *Udacity states this should be 43681, but I believe this is incorrect - a record count of 43681 is the total count from a **partial cartesian product** of step_trainer_trusted s, accelerometer_trusted a, and customer_curated c **due to failing to consider all required composite keys**, notably the a.user = c.email join condition; I included that in my ETL to ensure a fully constrained join for to map all records across the tables uniquely
+        * **NOTE 2** after [Filtering Reading Prior to Research Consent Date](#filtering-reading-prior-to-research-consent-date), this record count reduces to **32025**
 
 **HINT:** Use Transform - SQL Query nodes whenever possible.  Other node types my give unexpected results.  For example, rather than a Join node, use a SQL node that has two parents, then join them through a SQL query.
 
