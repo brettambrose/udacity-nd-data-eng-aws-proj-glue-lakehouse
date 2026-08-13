@@ -31,11 +31,11 @@ DEFAULT_DATA_QUALITY_RULESET = """
 # Script generated for node Customer Curated
 CustomerCurated_node1746296432391 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lakehouse-ba/customer/curated/"], "recurse": True}, transformation_ctx="CustomerCurated_node1746296432391")
 
-# Script generated for node Accelerometer Trusted
-AccelerometerTrusted_node1746296904392 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lakehouse-ba/accelerometer/trusted/"], "recurse": True}, transformation_ctx="AccelerometerTrusted_node1746296904392")
-
 # Script generated for node Step Trainer Trusted
 StepTrainerTrusted_node1746297942001 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lakehouse-ba/step_trainer/trusted/"], "recurse": True}, transformation_ctx="StepTrainerTrusted_node1746297942001")
+
+# Script generated for node Accelerometer Trusted
+AccelerometerTrusted_node1746296904392 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lakehouse-ba/accelerometer/trusted/"], "recurse": True}, transformation_ctx="AccelerometerTrusted_node1746296904392")
 
 # Script generated for node Join Step Trainer and Accelerometer Trusted to Customer Curated
 SqlQuery0 = '''
@@ -43,13 +43,9 @@ select
  s.sensorreadingtime,
  s.serialnumber,
  s.distancefromobject,
- a.user,
  a.x,
  a.y,
  a.z,
- c.customername,
- c.phone,
- c.birthday,
  c.registrationdate,
  c.lastupdatedate,
  c.sharewithresearchasofdate,
@@ -61,6 +57,7 @@ join accelerometer_trusted a
 join customer_curated c
  on s.serialnumber = c.serialnumber
  and a.user = c.email
+WHERE s.sensorreadingtime >= c.sharewithresearchasofdate
 '''
 JoinStepTrainerandAccelerometerTrustedtoCustomerCurated_node1746296481999 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"customer_curated":CustomerCurated_node1746296432391, "accelerometer_trusted":AccelerometerTrusted_node1746296904392, "step_trainer_trusted":StepTrainerTrusted_node1746297942001}, transformation_ctx = "JoinStepTrainerandAccelerometerTrustedtoCustomerCurated_node1746296481999")
 
