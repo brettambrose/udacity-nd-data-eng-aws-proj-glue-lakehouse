@@ -197,7 +197,7 @@ For stage of developing the lakehouse, the following row counts should be in eac
     * Step Trainer: 14460
 * Curated
     * Customer: 482
-    * Machine Learning: 43681
+    * Machine Learning: 40981
 
 **HINT:** Use Transform - SQL Query nodes whenever possible.  Other node types my give unexpected results.  For example, rather than a Join node, use a SQL node that has two parents, then join them through a SQL query.
 
